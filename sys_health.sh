@@ -1,4 +1,4 @@
-#!usr/bin/bash
+#!/usr/bin/bash
 
 LOGFILE="/var/log/sys_health.log"
 THRESHOLD=85
@@ -27,3 +27,15 @@ df -h --output=target,pcent | grep -v "Use%" | while read -r line; do
 		logger -t sys_health -p local0.warning "$MSG"
 	fi
 done
+
+FAILED=$(systemctl --failed --no-legend)
+if [ -n "$FAILED" ]; then
+	log "Failed service detected:"
+	echo "$FAILED" | while read -r line; do
+		log "	$line"
+		logger -t sys_health -p local0.warning "ALERT: Failed service - $line"
+	done
+else
+	log "No failed services."
+fi
+log "Health checkup is complete"
