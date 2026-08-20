@@ -24,7 +24,7 @@ df -h --output=target,pcent | grep -v "Use%" | while read -r line; do
 	if [ "$PERCENT" -ge "$THRESHOLD" ]; then
 		MSG="ALERT: Disk usage on $MOUNT is at ${PERCENT}% (threshold: ${THRESHOLD}%)"
 		log "$MSG"
-		logger -t sys_health -p local0.warning "$MSG"
+		logger -t sys_health -p user.warning "$MSG"
 	fi
 done
 

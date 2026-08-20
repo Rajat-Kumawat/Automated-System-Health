@@ -1,0 +1,10 @@
+[Unit]
+Description=System Health Check Script
+Wants=sys-health.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sys_health.sh
+
+[Install]
+WantedBy=multi-user.target
